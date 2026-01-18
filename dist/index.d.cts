@@ -1,6 +1,6 @@
 import { JSXElement } from '@minejs/jsx';
 
-type ContainerAs = 'div' | 'section' | 'article' | 'aside' | 'header' | 'footer' | 'main' | 'nav' | 'span' | 'button' | 'a' | 'form' | 'ul' | 'ol' | 'li';
+type ContainerAs = 'div' | 'label' | 'section' | 'article' | 'aside' | 'header' | 'footer' | 'main' | 'nav' | 'span' | 'button' | 'a' | 'form' | 'ul' | 'ol' | 'li';
 type ContainerDisplay = 'block' | 'inline-block' | 'flex' | 'inline-flex' | 'grid' | 'inline-grid';
 type ContainerDirection = 'row' | 'row-reverse' | 'column' | 'column-reverse';
 type ContainerAlign = 'start' | 'center' | 'end' | 'stretch' | 'baseline';
