@@ -5,7 +5,7 @@
 	"repo": {
 		"org"           : "cruxkit",
 		"name"          : "container",
-		"version"       : "0.0.2",
+		"version"       : "0.0.3",
 		"desc"          : "Type-safe layout box: typed props become mineui utils—no class strings needed.",
 		"kw"            : ["crux", "kit", "container"],
 		"license"       : "MIT",
