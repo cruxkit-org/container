@@ -104,7 +104,9 @@
         | 'screen'
         | 'min'
         | 'max'
-        | 'fit';
+        | 'fit'
+        | (string & {})
+        | number;
 
     export type ContainerMaxWidth =
         | 'xs'
@@ -113,7 +115,9 @@
         | 'lg'
         | 'xl'
         | '2xl'
-        | 'full';
+        | 'full'
+        | (string & {})
+        | number;
 
     export type ContainerBg =
         | 'page'
@@ -212,6 +216,8 @@
         // Sizing
         w?: ContainerWidth;
         h?: ContainerWidth;
+        minW?: ContainerWidth;
+        minH?: ContainerWidth;
         maxW?: ContainerMaxWidth;
 
         // Spacing - padding

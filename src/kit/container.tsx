@@ -111,6 +111,35 @@
         return `${prefix}-${value}`;
     }
 
+    const resolveSize = (
+        key: 'w' | 'h' | 'min-w' | 'min-h' | 'max-w',
+        val: string | number | undefined,
+        map?: Record<string, string>
+    ) => {
+        if (val === undefined) return null;
+
+        if (typeof val === 'number') {
+            return { class: `${key}-${val}` };
+        }
+
+        if (map && val in map) {
+            return { class: map[val] };
+        }
+
+        if (['auto', 'full', 'screen', 'min', 'max', 'fit'].includes(val)) {
+            return { class: `${key}-${val}` };
+        }
+
+        const styleProp =
+            key === 'w' ? 'width' :
+            key === 'h' ? 'height' :
+            key === 'min-w' ? 'minWidth' :
+            key === 'min-h' ? 'minHeight' :
+            'maxWidth';
+
+        return { style: { [styleProp]: val } };
+    };
+
     /**
      * A flexible layout container that maps typed props to Tailwind utility classes.
      *
@@ -130,6 +159,8 @@
             gapY,
             w,
             h,
+            minW,
+            minH,
             maxW,
             p,
             px,
@@ -158,6 +189,21 @@
             ...restProps
         } = props;
 
+        const wRes = resolveSize('w', w);
+        const hRes = resolveSize('h', h);
+        const minWRes = resolveSize('min-w', minW);
+        const minHRes = resolveSize('min-h', minH);
+        const maxWRes = resolveSize('max-w', maxW, maxWidthClassMap);
+
+        const computedStyle = {
+            ...(restProps as any).style,
+            ...wRes?.style,
+            ...hRes?.style,
+            ...minWRes?.style,
+            ...minHRes?.style,
+            ...maxWRes?.style,
+        };
+
         const classes = [
             display && displayClassMap[display],
             direction && directionClassMap[direction],
@@ -167,9 +213,11 @@
             gap !== undefined && `gap-${gap}`,
             gapX !== undefined && `gap-x-${gapX}`,
             gapY !== undefined && `gap-y-${gapY}`,
-            w && `w-${w}`,
-            h && `h-${h}`,
-            maxW && maxWidthClassMap[maxW],
+            wRes?.class,
+            hRes?.class,
+            minWRes?.class,
+            minHRes?.class,
+            maxWRes?.class,
             spacingClass('p', p),
             spacingClass('px', px),
             spacingClass('py', py),
@@ -197,7 +245,7 @@
             .filter(Boolean)
             .join(' ');
 
-        return <Tag className={classes} {...restProps}> {children} </Tag>;
+        return <Tag className={classes} {...restProps} style={computedStyle}> {children} </Tag>;
     }
 
 // ╚══════════════════════════════════════════════════════════════════════════════════════╝

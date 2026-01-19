@@ -1,6 +1,6 @@
 {
 	"name"                             : "@cruxkit/container",
-	"version"                          : "0.0.3",
+	"version"                          : "0.0.4",
 	"description"                      : "Type-safe layout box: typed props become mineui utils—no class strings needed.",
 	"keywords"                         : ["crux", "kit", "container"],
 	"license"                          : "MIT",

@@ -120,6 +120,37 @@
 
             expect(element).toBeDefined();
         });
+
+        test('supports flexible dimensions and custom values', () => {
+            const element = renderContainer({
+                w: 'full',
+                h: 16,
+                minW: 'min',
+                minH: 'screen',
+                maxW: 'lg'
+            }) as any;
+
+            expect(element.className).toContain('w-full');
+            expect(element.className).toContain('h-16');
+            expect(element.className).toContain('min-w-min');
+            expect(element.className).toContain('min-h-screen');
+            expect(element.className).toContain('max-w-lg');
+
+            const element2 = renderContainer({
+                w: '60px',
+                h: '1.5rem',
+                minW: '50%',
+                minH: '100vh',
+                maxW: '80ch'
+            }) as any;
+
+            expect(element2.className).not.toContain('w-60px');
+            expect(element2.style.width).toBe('60px');
+            expect(element2.style.height).toBe('1.5rem');
+            expect(element2.style.minWidth).toBe('50%');
+            expect(element2.style.minHeight).toBe('100vh');
+            expect(element2.style.maxWidth).toBe('80ch');
+        });
     });
 
 // ╚══════════════════════════════════════════════════════════════════════════════════════╝

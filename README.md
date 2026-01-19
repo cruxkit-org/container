@@ -8,7 +8,7 @@
 </div>
 
 <div align="center">
-    <img src="https://img.shields.io/badge/v-0.0.3-black"/>
+    <img src="https://img.shields.io/badge/v-0.0.4-black"/>
     <a href="https://github.com/cruxkit-org"><img src="https://img.shields.io/badge/🔥-@cruxkit-black"/></a>
     <br>
     <img src="https://img.shields.io/badge/coverage-100%25-brightgreen" alt="Test Coverage" />
@@ -117,6 +117,27 @@
                         Compose layout, spacing, and visuals with a single,
                         type-safe primitive.
                     </p>
+                </Container>
+            );
+        }
+        ```
+
+    - ### Flexible Sizing with Custom Values
+
+        ```typescript
+        export function Hero() {
+            return (
+                <Container
+                    w="100%"
+                    minH="600px"
+                    maxW="1200px"
+                    m="auto"
+                    p="2rem"
+                    display="flex"
+                    align="center"
+                    justify="center"
+                >
+                    <h1>Flexible Hero Section</h1>
                 </Container>
             );
         }
@@ -234,7 +255,9 @@
                 | 'screen'
                 | 'min'
                 | 'max'
-                | 'fit';
+                | 'fit'
+                | (string & {})
+                | number;
 
             export type ContainerMaxWidth =
                 | 'xs'
@@ -243,7 +266,9 @@
                 | 'lg'
                 | 'xl'
                 | '2xl'
-                | 'full';
+                | 'full'
+                | (string & {})
+                | number;
 
             export type ContainerBg =
                 | 'page'
@@ -342,6 +367,8 @@
                 // Sizing
                 w?: ContainerWidth;
                 h?: ContainerWidth;
+                minW?: ContainerWidth;
+                minH?: ContainerWidth;
                 maxW?: ContainerMaxWidth;
 
                 // Spacing - padding

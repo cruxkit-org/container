@@ -8,8 +8,8 @@ type ContainerJustify = 'start' | 'center' | 'end' | 'between' | 'around' | 'eve
 type ContainerGap = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16 | 20 | 24;
 type ContainerSpace = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16 | 20 | 24 | 32 | 40 | 48 | 56 | 64;
 type ContainerSpaceOrAuto = ContainerSpace | 'auto';
-type ContainerWidth = 'auto' | 'full' | 'screen' | 'min' | 'max' | 'fit';
-type ContainerMaxWidth = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';
+type ContainerWidth = 'auto' | 'full' | 'screen' | 'min' | 'max' | 'fit' | (string & {}) | number;
+type ContainerMaxWidth = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full' | (string & {}) | number;
 type ContainerBg = 'page' | 'surface' | 'raised' | 'brand' | 'brand-subtle' | 'success' | 'success-subtle' | 'warning' | 'warning-subtle' | 'error' | 'error-subtle' | 'info' | 'info-subtle' | 'current' | 'transparent';
 type ContainerTextColor = '1' | '2' | '3' | '4' | 'inverse' | 'brand' | 'success' | 'warning' | 'error' | 'info' | 'current' | 'transparent';
 type ContainerBorderColor = '1' | '2' | '3' | 'brand' | 'success' | 'warning' | 'error' | 'current' | 'transparent';
@@ -30,6 +30,8 @@ interface ContainerProps {
     gapY?: ContainerGap;
     w?: ContainerWidth;
     h?: ContainerWidth;
+    minW?: ContainerWidth;
+    minH?: ContainerWidth;
     maxW?: ContainerMaxWidth;
     p?: ContainerSpace;
     px?: ContainerSpace;
