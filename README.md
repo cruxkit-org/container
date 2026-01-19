@@ -8,7 +8,7 @@
 </div>
 
 <div align="center">
-    <img src="https://img.shields.io/badge/v-0.0.4-black"/>
+    <img src="https://img.shields.io/badge/v-0.0.5-black"/>
     <a href="https://github.com/cruxkit-org"><img src="https://img.shields.io/badge/🔥-@cruxkit-black"/></a>
     <br>
     <img src="https://img.shields.io/badge/coverage-100%25-brightgreen" alt="Test Coverage" />
@@ -249,6 +249,13 @@
 
             export type ContainerSpaceOrAuto = ContainerSpace | 'auto';
 
+            export type ContainerScale =
+                | 0 | 1 | 2 | 3 | 4 | 6 | 8 | 10 | 12 | 16 | 20 | 24 | 32 | 40 | 48 | 56 | 64;
+
+            export type ContainerFraction =
+                | '1/2' | '1/3' | '2/3' | '1/4' | '2/4' | '3/4'
+                | '1/5' | '2/5' | '3/5' | '4/5' | '1/6' | '5/6' | '1/12';
+
             export type ContainerWidth =
                 | 'auto'
                 | 'full'
@@ -256,17 +263,74 @@
                 | 'min'
                 | 'max'
                 | 'fit'
+                | ContainerScale
+                | ContainerFraction
                 | (string & {})
                 | number;
 
             export type ContainerMaxWidth =
+                | 'none'
                 | 'xs'
                 | 'sm'
                 | 'md'
                 | 'lg'
                 | 'xl'
                 | '2xl'
+                | '3xl'
+                | '4xl'
+                | '5xl'
+                | '6xl'
+                | '7xl'
                 | 'full'
+                | 'min'
+                | 'max'
+                | 'fit'
+                | 'prose'
+                | ContainerScale
+                | (string & {})
+                | number;
+
+            export type ContainerMinWidth =
+                | 0
+                | 'full'
+                | 'min'
+                | 'max'
+                | 'fit'
+                | ContainerScale
+                | (string & {})
+                | number;
+
+            export type ContainerHeight =
+                | 'auto'
+                | 'full'
+                | 'screen'
+                | 'min'
+                | 'max'
+                | 'fit'
+                | ContainerScale
+                | ContainerFraction
+                | (string & {})
+                | number;
+
+            export type ContainerMinHeight =
+                | 0
+                | 'full'
+                | 'screen'
+                | 'min'
+                | 'max'
+                | 'fit'
+                | ContainerScale
+                | (string & {})
+                | number;
+
+            export type ContainerMaxHeight =
+                | 'none'
+                | 'full'
+                | 'screen'
+                | 'min'
+                | 'max'
+                | 'fit'
+                | ContainerScale
                 | (string & {})
                 | number;
 
@@ -366,10 +430,11 @@
 
                 // Sizing
                 w?: ContainerWidth;
-                h?: ContainerWidth;
-                minW?: ContainerWidth;
-                minH?: ContainerWidth;
+                h?: ContainerHeight;
+                minW?: ContainerMinWidth;
+                minH?: ContainerMinHeight;
                 maxW?: ContainerMaxWidth;
+                maxH?: ContainerMaxHeight;
 
                 // Spacing - padding
                 p?: ContainerSpace;

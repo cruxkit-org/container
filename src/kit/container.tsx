@@ -67,7 +67,17 @@
         lg: 'max-w-lg',
         xl: 'max-w-xl',
         '2xl': 'max-w-2xl',
-        full: 'max-w-full'
+        full: 'max-w-full',
+        min: '',
+        max: '',
+        fit: '',
+        none: '',
+        '3xl': '',
+        '4xl': '',
+        '5xl': '',
+        '6xl': '',
+        '7xl': '',
+        prose: ''
     };
 
     const borderWidthClassMap: Record<ContainerBorderWidth, string> = {
@@ -111,31 +121,64 @@
         return `${prefix}-${value}`;
     }
 
+    const SCALE = new Set([0, 1, 2, 3, 4, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 56, 64]);
+    const FRACTIONS = new Set(['1/2', '1/3', '2/3', '1/4', '2/4', '3/4', '1/5', '2/5', '3/5', '4/5', '1/6', '5/6', '1/12']);
+
+    const W_KEYWORDS = new Set(['auto', 'full', 'screen', 'min', 'max', 'fit']);
+    const H_KEYWORDS = new Set(['auto', 'full', 'screen', 'min', 'max', 'fit']);
+    const MIN_W_KEYWORDS = new Set(['0', 'full', 'min', 'max', 'fit']);
+    const MAX_W_KEYWORDS = new Set(['none', 'full', 'min', 'max', 'fit']);
+    const MIN_H_KEYWORDS = new Set(['0', 'full', 'screen', 'min', 'max', 'fit']);
+    const MAX_H_KEYWORDS = new Set(['none', 'full', 'screen', 'min', 'max', 'fit']);
+
     const resolveSize = (
-        key: 'w' | 'h' | 'min-w' | 'min-h' | 'max-w',
+        key: 'w' | 'h' | 'min-w' | 'min-h' | 'max-w' | 'max-h',
         val: string | number | undefined,
         map?: Record<string, string>
     ) => {
         if (val === undefined) return null;
 
-        if (typeof val === 'number') {
-            return { class: `${key}-${val}` };
-        }
-
+        // Check map first (e.g. max-w-xs)
         if (map && val in map) {
             return { class: map[val] };
         }
 
-        if (['auto', 'full', 'screen', 'min', 'max', 'fit'].includes(val)) {
+        // Check numeric scale
+        if (typeof val === 'number' && SCALE.has(val)) {
             return { class: `${key}-${val}` };
         }
 
+        // Check fractions (only for w, h)
+        if ((key === 'w' || key === 'h') && FRACTIONS.has(val as string)) {
+            return { class: `${key}-${val}` };
+        }
+
+        // Check keywords
+        const keywords =
+            key === 'w' ? W_KEYWORDS :
+            key === 'h' ? H_KEYWORDS :
+            key === 'min-w' ? MIN_W_KEYWORDS :
+            key === 'min-h' ? MIN_H_KEYWORDS :
+            key === 'max-w' ? MAX_W_KEYWORDS :
+            MAX_H_KEYWORDS;
+
+        if (keywords.has(val as string)) {
+            return { class: `${key}-${val}` };
+        }
+
+        // Also check scale for min/max props (we added loops to SCSS)
+        if (['min-w', 'max-w', 'min-h', 'max-h'].includes(key) && typeof val === 'number' && SCALE.has(val)) {
+             return { class: `${key}-${val}` };
+        }
+
+        // Fallback to inline style
         const styleProp =
             key === 'w' ? 'width' :
             key === 'h' ? 'height' :
             key === 'min-w' ? 'minWidth' :
             key === 'min-h' ? 'minHeight' :
-            'maxWidth';
+            key === 'max-w' ? 'maxWidth' :
+            'maxHeight';
 
         return { style: { [styleProp]: val } };
     };
@@ -162,6 +205,7 @@
             minW,
             minH,
             maxW,
+            maxH,
             p,
             px,
             py,
@@ -194,6 +238,7 @@
         const minWRes = resolveSize('min-w', minW);
         const minHRes = resolveSize('min-h', minH);
         const maxWRes = resolveSize('max-w', maxW, maxWidthClassMap);
+        const maxHRes = resolveSize('max-h', maxH);
 
         const computedStyle = {
             ...(restProps as any).style,
@@ -202,6 +247,7 @@
             ...minWRes?.style,
             ...minHRes?.style,
             ...maxWRes?.style,
+            ...maxHRes?.style,
         };
 
         const classes = [
@@ -218,6 +264,7 @@
             minWRes?.class,
             minHRes?.class,
             maxWRes?.class,
+            maxHRes?.class,
             spacingClass('p', p),
             spacingClass('px', px),
             spacingClass('py', py),

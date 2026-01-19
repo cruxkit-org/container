@@ -136,6 +136,19 @@
             expect(element.className).toContain('min-h-screen');
             expect(element.className).toContain('max-w-lg');
 
+            // Test SCSS extended support (min-w fixed values, fractions)
+            const elementExtended = renderContainer({
+                w: '1/2',
+                minW: 12, // Should be min-w-12 now
+                maxW: 64, // Should be max-w-64 now
+                minH: 8,  // Should be min-h-8 now
+            }) as any;
+
+            expect(elementExtended.className).toContain('w-1/2');
+            expect(elementExtended.className).toContain('min-w-12');
+            expect(elementExtended.className).toContain('max-w-64');
+            expect(elementExtended.className).toContain('min-h-8');
+
             const element2 = renderContainer({
                 w: '60px',
                 h: '1.5rem',
