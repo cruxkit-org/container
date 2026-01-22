@@ -228,9 +228,9 @@
             shadow,
             position,
             overflow,
+            zIndex,
             children,
             className: className,
-            zIndex,
             ...restProps
         } = props;
 
@@ -288,8 +288,8 @@
             shadow && shadowClassMap[shadow],
             position,
             overflow && `overflow-${overflow}`,
-            className,
             zIndex && `z-${zIndex}`,
+            className,
         ]
             .filter(Boolean)
             .join(' ');
