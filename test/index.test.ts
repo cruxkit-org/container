@@ -164,6 +164,22 @@
             expect(element2.style.minHeight).toBe('100vh');
             expect(element2.style.maxWidth).toBe('80ch');
         });
+
+        test('supports events and custom attributes', () => {
+            let clicked = false;
+            const element = renderContainer({
+                onClick: () => { clicked = true; },
+                'data-testid': 'container-element',
+                'aria-label': 'Test Container'
+            }) as any;
+
+            expect(element.getAttribute('data-testid')).toBe('container-element');
+            expect(element.getAttribute('aria-label')).toBe('Test Container');
+
+            // Simulate click
+            element.click();
+            expect(clicked).toBe(true);
+        });
     });
 
 // ╚══════════════════════════════════════════════════════════════════════════════════════╝

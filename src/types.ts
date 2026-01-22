@@ -266,6 +266,8 @@
         | 'auto';
 
     export interface ContainerProps {
+        [key: string]: any;
+
         // Layout
         as?: ContainerAs;
         display?: ContainerDisplay;
@@ -320,6 +322,7 @@
 
         // Styling
         className?: string;
+        zIndex?: 0 | 10 | 20 | 30 | 40 | 50 | 60 | 70 | 80 | 90 | 100;
 
         // HTML attributes
         id?: string;
@@ -331,6 +334,7 @@
 
         // Events
         onClick?: (e: MouseEvent) => void;
+        onLoad?: () => void;
         onMouseEnter?: (e: MouseEvent) => void;
         onMouseLeave?: (e: MouseEvent) => void;
     }

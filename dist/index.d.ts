@@ -25,6 +25,7 @@ type ContainerShadow = 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'inner';
 type ContainerPosition = 'static' | 'relative' | 'absolute' | 'fixed' | 'sticky';
 type ContainerOverflow = 'visible' | 'hidden' | 'scroll' | 'auto';
 interface ContainerProps {
+    [key: string]: any;
     as?: ContainerAs;
     display?: ContainerDisplay;
     direction?: ContainerDirection;
@@ -64,6 +65,7 @@ interface ContainerProps {
     overflow?: ContainerOverflow;
     children?: JSXElement | JSXElement[];
     className?: string;
+    zIndex?: 0 | 10 | 20 | 30 | 40 | 50 | 60 | 70 | 80 | 90 | 100;
     id?: string;
     role?: string;
     href?: string;
@@ -71,6 +73,7 @@ interface ContainerProps {
     rel?: string;
     type?: string;
     onClick?: (e: MouseEvent) => void;
+    onLoad?: () => void;
     onMouseEnter?: (e: MouseEvent) => void;
     onMouseLeave?: (e: MouseEvent) => void;
 }
