@@ -6,7 +6,7 @@
 
 // ╔════════════════════════════════════════ PACK ════════════════════════════════════════╗
 
-    import type { JSXElement } from '@minejs/jsx';
+    import type { JSXElement,  } from '@minejs/jsx';
     import type {
         ContainerProps,
         ContainerDisplay,
